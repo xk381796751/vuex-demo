@@ -10,9 +10,9 @@
 					<p class="goods-price">¥ {{ list.price }}</p>
 					<div class="goods-compute">
 						<!--在dom中使用方法为：$store.commit()加上store.js中的属性的名称，示例如下-->
-						<button class="goods-reduce" @click="$store.commit('reduceGoods',index)">-</button>
+						<button class="goods-reduce" @click="reduceGoods(index)">-</button>
 						<input readonly v-model="list.num" />
-						<button class="goods-add" @click="$store.commit('addGoods',index)">+</button>
+						<button class="goods-add" @click="addGoods(index)">+</button>
 					</div>
 				</div>
 			</li>
@@ -29,12 +29,15 @@
 	</div>
 </template>
 <script>
+import {mapState, mapGetters, mapMutations} from 'vuex';
 export default {
 	name: "Goods",
 	computed: {
-		goods() {
-			return this.$store.state.goods;
-		}
+		...mapState(['goods']),
+		...mapGetters(['totalPrice','totalNum'])
+	},
+	methods: {
+		...mapMutations(['reduceGoods','addGoods']),
 	}
 };
 </script>
